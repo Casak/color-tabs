@@ -5,42 +5,37 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
-public class TabsActivity extends ActionBarActivity {
+public class TabsActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
-    private static TypedArray COLOR_THEME_TOP250;
-    private static TypedArray COLOR_THEME_COMMING_SOON;
-    private static TypedArray COLOR_THEME_FAV;
-    private static TypedArray[] color_themes = new TypedArray[3];
+    private static TypedArray ColorSetTop250Tab;
+    private static TypedArray ColorSetComingSoonTab;
+    private static TypedArray ColorSetFavoriteTab;
+    private static TypedArray[] colorThemes;
 
-    private ArgbEvaluator color_evaluator = new ArgbEvaluator();
+    private ArgbEvaluator colorEvaluator = new ArgbEvaluator();
     private Window window;
-
-    private Integer _next_color =  -1;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-// Get the ViewPager and set it's PagerAdapter so that it can display items
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
                 TabsActivity.this));
 
-        COLOR_THEME_TOP250 = getResources().obtainTypedArray(R.array.colorSetTop250);
-        COLOR_THEME_COMMING_SOON = getResources().obtainTypedArray(R.array.colorSetComingSoon);
-        COLOR_THEME_FAV = getResources().obtainTypedArray(R.array.colorSetFavorite);
-        color_themes[0] = COLOR_THEME_TOP250;
-        color_themes[1] = COLOR_THEME_COMMING_SOON;
-        color_themes[2] = COLOR_THEME_FAV;
+        ColorSetTop250Tab = getResources().obtainTypedArray(R.array.colorSetTop250);
+        ColorSetComingSoonTab = getResources().obtainTypedArray(R.array.colorSetComingSoon);
+        ColorSetFavoriteTab = getResources().obtainTypedArray(R.array.colorSetFavorite);
+        colorThemes = new TypedArray[] {ColorSetTop250Tab, ColorSetComingSoonTab, ColorSetFavoriteTab};
 
-        // Give the TabLayout the ViewPager
+
 
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
@@ -51,17 +46,17 @@ public class TabsActivity extends ActionBarActivity {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                TypedArray current_color_theme = color_themes[position];
-                TypedArray next_color_theme = position < color_themes.length - 1
-                        ? color_themes[position + 1]
-                        : color_themes[position];
+                TypedArray currentColorSet = colorThemes[position];
+                TypedArray nextColor = position < colorThemes.length - 1
+                        ? colorThemes[position + 1]
+                        : colorThemes[position];
 
                 Integer[] a = new Integer[4];
                 for ( int i = 0; i < 4 ; i++ ) {
-                    a[i] = (Integer) color_evaluator.evaluate(
+                    a[i] = (Integer) colorEvaluator.evaluate(
                             positionOffset,
-                            current_color_theme.getColor(i, 0),
-                            next_color_theme.getColor(i, 0)
+                            currentColorSet.getColor(i, 0),
+                            nextColor.getColor(i, 0)
                     );
                 }
 
@@ -70,7 +65,7 @@ public class TabsActivity extends ActionBarActivity {
 
             @Override
             public void onPageSelected(int position) {
-                changeColorTheme(color_themes[position]);
+                changeColorTheme(colorThemes[position]);
             }
 
             @Override
@@ -80,21 +75,20 @@ public class TabsActivity extends ActionBarActivity {
         });
     }
 
-    private void changeColorTheme(TypedArray color_theme){
+    private void changeColorTheme(TypedArray colorSet){
         changeInterfaceHeadColorTheme(
-                color_theme.getColor(0, 0),
-                color_theme.getColor(1, 0),
-                color_theme.getColor(2, 0),
-                color_theme.getColor(3, 0)
+                colorSet.getColor(0, 0),
+                colorSet.getColor(1, 0),
+                colorSet.getColor(2, 0),
+                colorSet.getColor(3, 0)
         );
     }
 
-    private void changeInterfaceHeadColorTheme(Integer action_bg_color, Integer status_bar_color, Integer selected_tab_color, Integer background_color) {
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(action_bg_color));
-        window.setStatusBarColor(status_bar_color);
-        window.setNavigationBarColor(background_color);
-
-        tabLayout.setBackgroundColor(background_color);
-        tabLayout.setSelectedTabIndicatorColor(selected_tab_color);
+    private void changeInterfaceHeadColorTheme(Integer actionBarColor, Integer statusBarColor, Integer tabIndicatorColor, Integer backgroundColor) {
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(actionBarColor));
+        window.setStatusBarColor(statusBarColor);
+        window.setNavigationBarColor(backgroundColor);
+        tabLayout.setBackgroundColor(backgroundColor);
+        tabLayout.setSelectedTabIndicatorColor(tabIndicatorColor);
     }
 }
