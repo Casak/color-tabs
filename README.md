@@ -22,7 +22,7 @@ Simple changing colors tabs.
   Obtain color arrays via getResources().obtainTypedArray() to an array of TypedArray.
   
 ```java
-    TypedArray[] colorThemes = new TypedArray[]{
+    TypedArray[] colors = new TypedArray[]{
                     resources.obtainTypedArray(R.array.color_set_tab_1),
                     resources.obtainTypedArray(R.array.color_set_tab_2),
                     resources.obtainTypedArray(R.array.color_set_tab_3)};
