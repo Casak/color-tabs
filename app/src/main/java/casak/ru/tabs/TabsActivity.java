@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.TabLayout;
@@ -22,7 +23,8 @@ public class TabsActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        window = getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window = getWindow();
+
         Resources resources = getResources();
         colorThemes = new TypedArray[]{
                 resources.obtainTypedArray(R.array.color_set_tab_1),
@@ -80,10 +82,18 @@ public class TabsActivity extends AppCompatActivity {
             );
         }
 
-        private void changeInterfaceHeadColorTheme(Integer actionBarColor, Integer statusBarColor, Integer tabIndicatorColor, Integer backgroundColor) {
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(actionBarColor));
-            window.setStatusBarColor(statusBarColor);
-            window.setNavigationBarColor(backgroundColor);
+        private void changeInterfaceHeadColorTheme(Integer actionBarColor, Integer statusBarColor,
+                                                   Integer tabIndicatorColor, Integer backgroundColor) {
+
+            try{
+                getSupportActionBar().setBackgroundDrawable(new ColorDrawable(actionBarColor));
+            } catch (NullPointerException e){
+                e.printStackTrace();
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.setStatusBarColor(statusBarColor);
+                window.setNavigationBarColor(backgroundColor);
+            }
             tabLayout.setBackgroundColor(backgroundColor);
             tabLayout.setSelectedTabIndicatorColor(tabIndicatorColor);
         }

@@ -8,17 +8,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 3;
-    private Context context;
     private String tabTitles[];
 
 
     public SampleFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
-        this.context = context;
         tabTitles = new String[] {
-                context.getResources().getString(R.string.Top250Tab),
-                context.getResources().getString(R.string.ComingSoonTab),
-                context.getResources().getString(R.string.FavoriteTab) };
+                context.getResources().getString(R.string.tab1_title),
+                context.getResources().getString(R.string.tab2_title),
+                context.getResources().getString(R.string.tab3_title) };
     }
 
     @Override
@@ -33,7 +31,6 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        // Generate title based on item position
         return tabTitles[position];
     }
 }
