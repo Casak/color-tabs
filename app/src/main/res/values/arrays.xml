@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="colorSetTop250">
+    <array name="color_set_tab_1">
         <item>#9C27B0</item>
         <item>#6A1B9A</item>
         <item>#69F0AE</item>
         <item>#E1BEE7</item>
     </array>
 
-    <array name="colorSetComingSoon">
+    <array name="color_set_tab_2">
         <item>#673AB7</item>
         <item>#4527A0</item>
         <item>#B2FF59</item>
         <item>#D1C4E9</item>
     </array>
 
-    <array name="colorSetFavorite">
+    <array name="color_set_tab_3">
         <item>#3F51B5</item>
         <item>#283593</item>
         <item>#EEFF41</item>
