@@ -12,21 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 public class TabsActivity extends AppCompatActivity {
-    private TabLayout tabLayout;
-
-    private static ArgbEvaluator colorEvaluator;
-    private Window window;
-    private static TypedArray[] colorThemes;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window = getWindow();
-
-        colorEvaluator = new ArgbEvaluator();
-
         Resources resources = getResources();
-        colorThemes = new TypedArray[]{
+        TypedArray[] colors = new TypedArray[]{
                 resources.obtainTypedArray(R.array.color_set_tab_1),
                 resources.obtainTypedArray(R.array.color_set_tab_2),
                 resources.obtainTypedArray(R.array.color_set_tab_3)};
@@ -34,22 +25,36 @@ public class TabsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.addOnPageChangeListener(new ColorChangeListener());
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+
+        ColorChangeListener listener = new ColorChangeListener(colors, getWindow(), tabLayout);
+
+        viewPager.addOnPageChangeListener(listener);
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
                 TabsActivity.this));
 
-        tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
 
     class ColorChangeListener implements ViewPager.OnPageChangeListener {
+        private TypedArray[] colors;
+        private ArgbEvaluator colorEvaluator;
+        private Window window;
+        private TabLayout tabLayout;
+
+        public ColorChangeListener(TypedArray[] colors, Window window, TabLayout tabLayout){
+            this.colors = colors;
+            this.window = window;
+            this.tabLayout = tabLayout;
+            colorEvaluator = new ArgbEvaluator();
+        }
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            TypedArray currentColorSet = colorThemes[position];
-            TypedArray nextColor = position < colorThemes.length - 1
-                    ? colorThemes[position + 1]
-                    : colorThemes[position];
+            TypedArray currentColorSet = colors[position];
+            TypedArray nextColor = position < colors.length - 1
+                    ? colors[position + 1]
+                    : colors[position];
 
             Integer[] a = new Integer[4];
             for (int i = 0; i < 4; i++) {
@@ -65,7 +70,7 @@ public class TabsActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            changeColorTheme(colorThemes[position]);
+            changeColorTheme(colors[position]);
         }
 
         @Override
