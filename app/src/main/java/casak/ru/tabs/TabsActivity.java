@@ -12,18 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
 public class TabsActivity extends AppCompatActivity {
-    private ViewPager viewPager;
     private TabLayout tabLayout;
 
-    private static TypedArray[] colorThemes;
-
-    private ArgbEvaluator colorEvaluator = new ArgbEvaluator();
+    private static ArgbEvaluator colorEvaluator;
     private Window window;
+    private static TypedArray[] colorThemes;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window = getWindow();
+
+        colorEvaluator = new ArgbEvaluator();
 
         Resources resources = getResources();
         colorThemes = new TypedArray[]{
@@ -33,7 +33,7 @@ public class TabsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.addOnPageChangeListener(new ColorChangeListener());
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
                 TabsActivity.this));
