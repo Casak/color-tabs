@@ -1,4 +1,40 @@
 # tabs
-Простые табы со сменой цветов в Material Design.
-![таб: favs](https://lh3.googleusercontent.com/E8syii2BJxOReBopMSUIxjh4GVzDwG8dBxpi3k5qR346VyAwGbFWiDLHQBNjSaKCx6qGz_AgvCi-OxD9n8L4UwmVO8OS-zPeIq7q3jOMXBl7S7v2A8JeoxmS1fyo0_4_APyPne7LeDnPpDKsndtpNgK9suAiW5XmUmyFWTWY1vljNiACSYbQr6W7n1a9hQ3louufiZKj9RE4dMEoWtWaXc5N80wzEBGuLChWMNTaUSugPUJDXdGhZmH6nm9f13_6-oWO2meMxyOMe9la2f1U8INLEgvZaDAs5z0Ix4reMgCoj03BPyr78AVjpyicDQq4iiciCn6e_aErbBw7pdySIx8BuxnDQTWZci2UacmU3xSJhkJiL-Kxj881fV9NB2fxxnKPc1diCPJMHwstGlFqqnKj9FSbVPO84xtBgiPEibofFJJfW-AD4T7gAZC6MgdBX-wE3YlouMLPfoahqE6atfckmCqeJmLNxNyBs6B1zaalsU8nkC3I-rzp2ndutK1WohWDR1SxTT1rx8_d_Drq39Rjp47QnHwS4fdD_CKhDnC1O9diqYVmpr15M_GlxYxEZKyM=w597-h995-no)
-![таб: TOP250](https://lh3.googleusercontent.com/3xtN5z5c1T9J0rg2MF4FxasIkMuT-0CjcBWarR3psO8pNhFaDl03sETR-lZ4VM77C6RG_Lrte8AEPP5k4YEejoLWQFKJxJIN3FhVcaZZIR238PIIr97kiU8YWdIniYF56v3PIpDhrT93SCMEhiXllAoOecrR5sIn6P7CyD1BEoslkjek46KyH9w1Kz1GhMCtrt8jsXY6TTkZKKzK6mKEzx05GVuwUd83PI8H-1t1a6bEK996frNpb7a7kP3_YuPkOVN_0lzDDQ1Ds6JN3oQk04B_HqxAkxVln2c67h19i5VEkPCNTOdvRE1qvNKT3EuaAkiIc22jKkrQGKY-_BuVDV6vWWDkOSO0u3qceEmW0P803c4KNH5fmF0NhFYQ-0IES14ovACC5yl3-5KYIfd9F0WFCbHSI_6p7bK2XfIXDORDCK7JiRX3pqbLJqspXWGjwSo_bDKz4AU8IHB0v4tDWitmyBvVj2VNTuH8q46HJs_EUwDhXyRlRMFzKfgSg9E_G0oaUjuDRUVY-shnmKha-Pn-fqKK91bvsFRy4ZF8cSQUXltIDr7ani50FClL5KApbnOI=w597-h995-no)
+Simple changing colors tabs.
+
+## Using:
+
+### Resources:
+  Add colors to res.arrays. Each array corresponds to tab.
+
+### Activity:
+
+  Obtain color arrays via getResources().obtainTypedArray() to an array of TypedArray.
+    ```java
+    TypedArray[] colorThemes = new TypedArray[]{
+                    resources.obtainTypedArray(R.array.color_set_tab_1),
+                    resources.obtainTypedArray(R.array.color_set_tab_2),
+                    resources.obtainTypedArray(R.array.color_set_tab_3)};
+    ```
+
+  Get TabLayout and ViewPager instances.
+    ```java
+    ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+    TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+    ```
+
+  Create an instance of ColorChangeListener and provide it TypedArray[], Window and TabLayout.
+    ```java
+    ColorChangeListener listener = new ColorChangeListener(colors, getWindow(), tabLayout);
+    ```
+
+  Attach that listener to ViewPager.
+    ```java
+    viewPager.addOnPageChangeListener(listener);
+    ```
+
+  Setup TabLayout with ViewPager.
+    ```java
+    tabLayout.setupWithViewPager(viewPager);
+    ```
+
+![tab: Tab#1]()
