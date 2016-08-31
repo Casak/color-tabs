@@ -2,8 +2,8 @@
     <string name="app_name">color-tabs</string>
 
     <!--Tab titles-->
-    <string name="tab1_title">Tab1</string>
-    <string name="tab2_title">Tab2</string>
-    <string name="tab3_title">Tab3</string>
+    <string name="tab1_title">Tab #1</string>
+    <string name="tab2_title">Tab #2</string>
+    <string name="tab3_title">Tab #3</string>
 
 </resources>
